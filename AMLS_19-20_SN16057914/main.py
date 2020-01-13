@@ -107,7 +107,7 @@ acc_B2_test = svmtest(X_testB2,y_testB2,svm_modelB2)
 
 #task B2, testing with CNN, optimiser = Adadelta (also tested with rmsprop)
 #X_traincnn, X_valcnn, X_testcnn, y_traincnn, y_valcnn, y_testcnn = preprocess_B2(1)
-#cnntrain(X_traincnn,y_traincnn,X_valcnn,y_valcnn,'Adadelta') #'Adadelta' or 'rmsprop' etc
+#cnntrain(X_traincnn,y_traincnn,X_valcnn,y_valcnn,'Adadelta') #'Adadelta' or 'rmsprop' etc can be inputted
 
 #==============================================================================
 print('TA1:{},{};TA2:{},{};TB1:{},{};TB2:{},{};'.format(
