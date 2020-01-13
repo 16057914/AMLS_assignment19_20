@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 13 03:14:23 2020
-
-@author: mamura
-"""
 from sklearn import metrics
 import seaborn as sns
 import matplotlib.pyplot as plt
