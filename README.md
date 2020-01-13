@@ -4,3 +4,5 @@ All files required for my code to run are in the file 'AMLS_19-20_SN16057914'. I
 
 
 There is also a folder named 'Datasets' that is empty on this Github as the file is too large but shows that this is how I want the Datasets folder placed in 'AMLS_19-20_SN16057914'. I provide a Google Drive link to download the Datasets folder with the data and labels named in the way I refer to them in my code. It's important that this Dataset folder is downloaded and placed in the 'AMLS_19-20_SN16057914' folder for my code to work.
+
+My development of this code was done on Jupyter Notebook, and so there is not much commit history here to display my progress throughout the time I have been working on it. I could provide the Notebooks upon request.
