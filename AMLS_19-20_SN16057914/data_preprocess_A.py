@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+#this contains all preprocessing required for A tasks, both with and without feature selection.
+
 from sklearn.model_selection import train_test_split
 import os
 from keras.preprocessing import image
@@ -7,7 +10,7 @@ import numpy as np
 from featureext import run_dlib_shape
 from skimage import color
 
-def extract_features_labels_from_celeb(x):
+def extract_features_labels_from_celeb(x): #extracts features, images and labels from the celebritiy images folder.
     
     # Global Parameters
     basedir = './Datasets'
@@ -43,14 +46,14 @@ def extract_features_labels_from_celeb(x):
                 image.load_img(img_path,
                                target_size=target_size,
                                interpolation='bicubic'))
-            all_images.append(img)
-            all_gender_labels.append(gender_labels[file_name])
+            all_images.append(img)  #append the images to save all images, for testing without feature extraction
+            all_gender_labels.append(gender_labels[file_name]) #append all labels
             all_smiling_labels.append(smiling_labels[file_name])
             
-            features, _ = run_dlib_shape(img)
+            features, _ = run_dlib_shape(img) #try to extract features from the image
             if features is not None:
-                all_features.append(features)
-                fe_gender_labels.append(gender_labels[file_name])
+                all_features.append(features) #if feature extraction successful, append it
+                fe_gender_labels.append(gender_labels[file_name]) #append the label if it was successful
                 fe_smiling_labels.append(smiling_labels[file_name])
                 
     celebimages = np.array(all_images)
@@ -61,6 +64,11 @@ def extract_features_labels_from_celeb(x):
     fe_gender_labels = np.array(fe_gender_labels)
     fe_smiling_labels = np.array(fe_smiling_labels)
     
+    #returns needed for the different tasks. 
+    #1 = selected model for A1 (feature extraction used) so return landmark features and gender labels
+    #11 = A1 model tested with pure images
+    #2 = selected A2 model (feature extraction used) so return landmark features and smiling labels
+    #22 = A2 model tested with pure images
     if x == 1:
         return landmark_features, fe_gender_labels
     elif x == 11:
@@ -70,7 +78,7 @@ def extract_features_labels_from_celeb(x):
     elif x == 22:
         return celebimages, smiling_labels
 
-def extract_features_labels_from_celeb_test(x):
+def extract_features_labels_from_celeb_test(x): #the same as above, but for the test dataset
 
     # Global Parameters
     basedir = './Datasets'
@@ -133,7 +141,7 @@ def extract_features_labels_from_celeb_test(x):
     elif x == 22:
         return celebimages, smiling_labels
     
-def preprocess_A1():
+def preprocess_A1(): #preprocessing required for A1
     
     landmarkfeatures, genderlabels = extract_features_labels_from_celeb(1)
     testlandmarkfeatures, testgender = extract_features_labels_from_celeb_test(1)
@@ -152,7 +160,7 @@ def preprocess_A1():
     
     return d2_X,y,X_train, X_val, d2_X_test, y_train, y_val, y_test
 
-def preprocess_A2():
+def preprocess_A2(): #preprocessing required for A2
     
     landmarkfeatures, smilinglabels = extract_features_labels_from_celeb(2)
     testlandmarkfeatures, testsmiling = extract_features_labels_from_celeb_test(2)
@@ -171,7 +179,7 @@ def preprocess_A2():
     
     return d2_X,y,X_train, X_val, d2_X_test, y_train, y_val, y_test
     
-def preprocess_images_A1():
+def preprocess_images_A1(): #preprocessing for use of images for A1
     
     celebimages, allgenderlabels = extract_features_labels_from_celeb(11)
     testcelebimages, testallgender = extract_features_labels_from_celeb_test(11)
@@ -203,7 +211,7 @@ def preprocess_images_A1():
     
     return d2_X,y,X_train, X_val, d2_X_test, y_train, y_val, y_test
     
-def preprocess_images_A2():
+def preprocess_images_A2(): #preprocessing for use of images in A2
     
     celebimages, allsmilinglabels = extract_features_labels_from_celeb(22)
     testcelebimages, testallsmiling = extract_features_labels_from_celeb_test(22)
