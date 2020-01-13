@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 13 03:29:30 2020
-
-@author: mamura
-"""
-
 from sklearn.svm import SVC
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import accuracy_score
