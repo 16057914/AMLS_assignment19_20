@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Jan 12 16:48:35 2020
-
-@author: mamura
-"""
 from A import logregtrain, logregval, logregtest, logreg_lc
 from B import svmtrain, svmval, svmtest,svm_lc,cnntrain
 from data_preprocess_A import preprocess_A1,preprocess_A2, preprocess_images_A1, preprocess_images_A2
