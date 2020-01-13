@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Jan 12 17:05:00 2020
-
-@author: mamura
-"""
 import dlib
 import os
 from keras.preprocessing import image
