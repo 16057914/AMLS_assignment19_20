@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+#the functions required to carry out the feature extractions in the preprocessing files. Obtained from lab.
+
 import dlib
 import os
 from keras.preprocessing import image
