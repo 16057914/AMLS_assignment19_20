@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Jan 12 17:26:46 2020
-
-@author: mamura
-"""
-
 from sklearn.model_selection import train_test_split
 import os
 from keras.preprocessing import image
