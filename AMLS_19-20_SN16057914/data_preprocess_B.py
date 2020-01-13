@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+#this contains all preprocessing required for B tasks, both with (for B1) and without feature selection (for B2).
+
 from sklearn.model_selection import train_test_split
 import os
 from keras.preprocessing import image
 import numpy as np
 from featureext import run_dlib_shape
 
-def extract_features_labels_from_cartoon(x):
+def extract_features_labels_from_cartoon(x): #extracts features, images and labels from the celebritiy images folder.
     
     # Global Parameters
     basedir = './Datasets'
@@ -46,13 +49,13 @@ def extract_features_labels_from_cartoon(x):
                 image.load_img(img_path,
                                target_size=target_size,
                                interpolation='bicubic'))
-            all_images.append(img)
-            all_eye_labels.append(eye_labels[file_name])
+            all_images.append(img) #append the images to save all images, for testing without feature extraction
+            all_eye_labels.append(eye_labels[file_name]) #append all eye colour labels, only B2 needs pure images.
             
             features, _ = run_dlib_shape(img)
             if features is not None:
-                all_features.append(features)
-                fe_face_labels.append(face_labels[file_name])
+                all_features.append(features) #append features if obtained
+                fe_face_labels.append(face_labels[file_name]) #and if so, append face shape labels, only B1 needs feature extraction.
                 
     celebimages = np.array(all_images)
     eye_labels = np.array(all_eye_labels)
@@ -60,12 +63,13 @@ def extract_features_labels_from_cartoon(x):
     landmark_features = np.array(all_features)
     fe_face_labels = np.array(fe_face_labels)
     
+    #returns differ for tasks B1 and B2.
     if x == 1:
         return landmark_features,fe_face_labels
     elif x == 2:
         return celebimages, eye_labels
 
-def extract_features_labels_from_cartoon_test(x):
+def extract_features_labels_from_cartoon_test(x): #same as above, for the test dataset
 
     # Global Parameters
     basedir = './Datasets'
@@ -124,7 +128,7 @@ def extract_features_labels_from_cartoon_test(x):
     elif x == 2:
         return celebimages, eye_labels
 
-def preprocess_B1():
+def preprocess_B1(): #preprocessing required for B1
     
     landmarkfeatures,facelabels = extract_features_labels_from_cartoon(1)
     testlandmarkfeatures,testfacelabels = extract_features_labels_from_cartoon_test(1)
@@ -143,7 +147,8 @@ def preprocess_B1():
     
     return d2_X, y, X_train, X_val, d2_X_test, y_train, y_val, y_test 
 
-def preprocess_B2(x): #x = 0 for svm, x = 1 for cnn
+def preprocess_B2(x): #preprocessing for B2 
+    #x = 0 for svm, x = 1 for cnn. CNN requires different inputs (non flattened X, one hot encoded y)
     cartoonimages,eyelabels = extract_features_labels_from_cartoon(2)
     testcartoonimages,testeyelabels = extract_features_labels_from_cartoon_test(2)
     
