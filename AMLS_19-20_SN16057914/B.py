@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+#this B.py contains the models used or tested by the B tasks, including SVM and CNN.
+
 from sklearn.svm import SVC
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import accuracy_score
@@ -12,14 +15,14 @@ from keras.callbacks import ModelCheckpoint
 from keras.optimizers import adam, Adadelta
 from keras.losses import categorical_crossentropy
 
-def svmtrain(X_train,y_train,kernel_type):
+def svmtrain(X_train,y_train,kernel_type): #this trains and fits the SVM, different kernels can be passed.
     svm_model = SVC(kernel = kernel_type, C = 1)
     
     svm_model.fit(X_train, y_train)
     
     return svm_model
     
-def svmval(X_val,y_val,svm_model,X_train,y_train):
+def svmval(X_val,y_val,svm_model,X_train,y_train): #validates the model passed to it.
     
     predictions = svm_model.predict(X_val)
     
@@ -31,7 +34,7 @@ def svmval(X_val,y_val,svm_model,X_train,y_train):
     
     return trainacc, valacc, predictions
 
-def svmtest(X_test,y_test,svm_model):
+def svmtest(X_test,y_test,svm_model): #tests model based on test data.
     
     testpred = svm_model.predict(X_test)
     
@@ -40,7 +43,8 @@ def svmtest(X_test,y_test,svm_model):
     return testacc
 
 
-def cnntrain(X_train,y_train,X_test,y_test,optimiser):
+def cnntrain(X_train,y_train,X_test,y_test,optimiser): #creates a CNN, optimiser must be set
+    #building the CNN
     model_cnn = Sequential()
     # specify input shape
     model_cnn.add(Conv2D(32, kernel_size=(3, 3),activation='relu',input_shape=(64,64,3))) #image size
@@ -50,21 +54,23 @@ def cnntrain(X_train,y_train,X_test,y_test,optimiser):
     model_cnn.add(Flatten())
     model_cnn.add(Dense(128, activation='relu'))
     model_cnn.add(Dropout(0.5))
-    model_cnn.add(Dense(5, activation='softmax')) #5 classes
+    model_cnn.add(Dense(5, activation='softmax')) #5 classes, softmax output for multiclass
     
     #compile
     model_cnn.compile(loss='categorical_crossentropy',
               optimizer=optimiser,
               metrics=['accuracy'])
     
+    #fit the CNN to the train data and validate
     model_cnn.fit(X_train,y_train,
           batch_size=60,
           epochs=3,
           verbose=1,
           validation_data=(X_test,y_test))
     
-def svm_lc(X,y,x):
+def svm_lc(X,y,x): #enables learning curve to be drawn.
     
+    #different training sizes for B1 and B2, must be passed as argument for this function.
     if x == 1: 
         trainsizes = [2000,3000,5000,6552]
         
